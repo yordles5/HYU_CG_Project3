@@ -1,0 +1,39 @@
+여러 개의 obj 메시를 표시하는 자체 obj 파일 뷰어를 구현하세요
+
+A 프로젝트1의 카메라 조작, 그리드 평면 구현 (10점)
+B. 여러개의 obj파일 load, render (70점)
+  내 obj 뷰어 윈도우에 obj 파일을 드래그 앤 드롭해서 열기 (glfwSetDropCallback 구글링)
+  obj 파일을 읽고 mesh를 display하기, vertex position과 vertex normals, faces information만 사용 (40점)
+    텍스쳐 좌표, material, group, shading 정보 무시 즉, vt, mtllib, usemtl, o, s 태그 무시
+    이 요구사항을 충족하면 cube-tri.obj, sphere-tri.obj, and cylinder-tri.obj. 파일 제대로 load, rendering 가능
+  obj파일을 로드할  다음 정보들을 stdout(터미널)에 출력해야함. (10점)
+     obj 파일 이름
+     faces의 개수
+     vertice가 3개인 face 개수
+     vertice가 4개인 face 개수
+     vertice가 4개보다 많은 face 개수
+  여러개의 obj 파일 열기 지원 : obj 파일 a가 렌더링 중인 상태에서 obj 파일 b를 드래그 앤 드롭으로 추가하면
+    obj 파일 b의 mesh가 a의 mesh에서 고정된 오프셋만큼 3D 공간에 추가되어야 함 (10점)
+    새로 추가된 mesh의 x축 위치는 이전에 한 거에서 +2만큼 offset 이동
+  다양한 vertex 개수의 polygon으로 이루어진 mesh 지원 : 정점 수가 동일하지 않은 폴리곤을 가진 메시를 로드하고     렌더링할 수 있도록 하세요, 이를 위해 glDrawArrays() 또는 glDrawElements()를 사용하세요 (10점)
+    mesh에는 삼각형, 사각형, 5개 이상의 정점을 가진 폴리곤이 혼합되어 있을 수 있음
+    vertex array를 사용하여 해당 mesh를 렌더링하기 위해, 사각형이나 다각형을 삼각형으로 변환해야 함.
+      이를 위해 간단한 triangulation (삼각분할) 알고리즘을 구현해야 함.
+    이 요구사항을 충족하면 cube-tri-quad.obj, sphere-tri-quad.obj, and cylinder-tri-quad-n.obj 샘플 obj 파일이
+      정확히 로드되고 렌더링 됨.
+C. 조명 & 기타 (20점)
+   모든 obj를 Phong Illumination and Phong shading 사용해서 렌더링 (20점)
+   조명 파라미터 (light colors, light position, material colors, material shininess) 등은 내가 원하는 걸로 선택
+
+Report (10점)
+  최대 2페이지의 pdf 보고서, ms 워드 사용, 보고서엔 다음 내용을 포함
+  구현한 요구사항 (5점)
+  프로그렘이 로드한 메시를 렌더링하는 몇개의 스크린샷(5점), 제공된 샘플 obj 파일은 사용하면 안됨. 
+
+A. 프로그램은 Python 3.8에서 실행되어야 하며, NumPy, PyOpenGL, glfw, PyGLM만 설치되어야 합니다. 다른 추가적인 파이썬 모듈은 사용하지 마세요.
+B. 이벤트 처리와 OpenGL 컨텍스트 관리에는 오직 glfw만 사용해야 하며, glut 함수를 사용하지 마세요
+
+추가정보)
+A. glfw 파이썬 바인딩의 drop_callback은 원래 C로 작성된 glfw와 다소 다릅니다. 파이썬의 drop_callback은 두 개의 파라미터만 받습니다: 윈도우와 경로 목록.
+B. obj 파일 형식 참조: https://en.wikipedia.org/wiki/Wavefront_.obj_file
+C. 파이썬은 obj 파일을 파싱하는 데 유용한 강력한 문자열 메서드를 제공합니다. 그 중 split() 메서드가 가장 유용할 것입니다.
